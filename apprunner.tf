@@ -11,7 +11,7 @@ resource "aws_apprunner_service" "example" {
         port = "8080"
       }
       image_identifier      = var.image
-      image_repository_type = "ECR_PRIVATE"
+      image_repository_type = "ECR"
     }
     auto_deployments_enabled = true
   }
