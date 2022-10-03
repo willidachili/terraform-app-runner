@@ -170,3 +170,7 @@ Som dere ser er "glenn" hardkodet ganske mange steder, bruk ditt eget ECR reposi
           docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:$rev
           docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:latest
 ```
+
+## Test 
+
+* Når dere kjører jobben første gang, vil det lages en docker container som pushes til ECR repository
