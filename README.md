@@ -1,8 +1,12 @@
 # Infrastruktur som kode med Terraform og AWS App runner 
 
+Når du er ferdig med denne oppgaven vil du ha et repository som inneholder en Spring Boot applikasjon. Når du gjør en commit 
+på main branch så vil GitHub actions lage et Docker Image, og gjøre en push til ECR. 
+
+I tillegg vil En annen GitHub actions job sørge for å lage AWS infrastruktur, IAM roller og en AWS App Runner Service.
+
 * I denne oppgaven skal vi gjøre en en docker container tilgjengelig over internett ved hjelp av tjeneste AWS Apprunner
 * Apprunner lager nødvendig infrastruktur for containeren, og du som utvikler kan fokusere på koden.
-* 
 
 Vi skal også se nærmere på mer avansert GitHub Actions  
 
@@ -138,3 +142,31 @@ Vi kan da bruke ```needs``` for å lage en avhengighet mellom en eller flere job
     needs: build_docker_image
 ```
 
+## Endre provider.tf
+
+Provider.tf filen inneholder konfigurasjon for terraform, blant annet informasjon om hvor Terraform kan finne en state fil
+Endre key, til ditt eget studentnavn
+
+```hcl
+backend "s3" {
+    bucket = "pgr301-2021-terraform-state"
+    key    = "<key>/apprunner.state"
+    region = "eu-north-1"
+}
+```
+
+## Finn ditt eget ECR repositoru
+
+* Det er laget et ECR repositor til hver student som en del av labmiljøet *<studentnavn>-private*
+
+## Gjør nødvendig endringer i pipeline.yml 
+
+Som dere ser er "glenn" hardkodet ganske mange steder, bruk ditt eget ECR repository.
+
+```sh
+          docker build . -t hello
+          docker tag hello 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:$rev
+          docker tag hello 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:latest
+          docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:$rev
+          docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:latest
+```
