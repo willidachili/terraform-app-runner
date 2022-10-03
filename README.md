@@ -138,7 +138,7 @@ backend "s3" {
 ## Finn ditt eget ECR repository
 
 * Det er laget et ECR repositor til hver student som en del av labmiljøet 
-* Dette heter *<studentnavn>-private*
+* Dette heter *studentnavn-private*
 * Gå til tjenesten ECR og sjekk at dette finnes
 
 ## Gjør nødvendig endringer i pipeline.yml 
