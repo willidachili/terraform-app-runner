@@ -105,26 +105,6 @@ pipeline får lov til å _fortsette dersom dette steget feiler._
         continue-on-error: true
 ```
 
-* Her setter vi en variabel lik _all output fra et tidligere steg (!)_   
-
-```yaml
-       env:
-          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-```
-
-Her bruker vi også den innebyggede funksjonen  ```github.issues.createComment``` til å lage en kommentar til en Pull request, med innholdet av Terraform plan. Altså, hva kommer til å skje hvis vi kjører en apply på denne.
-
-```yaml
-  script: |
-    ...
-    github.issues.createComment({
-      issue_number: context.issue.number,
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      body: output
-    })
-```
-
 Når noen gjør en Git push til *main* branch, kjører vi ```terraform apply``` med ett flag ```--auto-approve``` som gjør at terraform ikke 
 spør om lov før den kjører.
 
@@ -187,8 +167,7 @@ for å fortelle app runner hvilket container som skal deployes.
 
 * Kjør byggejobben manuelt førte gang gang.  Det vil det lages en docker container som pushes til ECR repository. App runner vil lage en service 
 * Sjekk at det er dukket opp to container images i ECR. En med en tag som matcher git commit, og en som heter latest.
-* Lag en Pull request, ved å gjøre en endring i terraform koden, sjekk at det blir lagt på en kommentar. Du kan for eksempel gjøre denne endringen som 
-konfigurerer CPU og minne for tjenesten;
+* Lag en Pull request, ved å gjøre en endring i terraform koden, sjekk at det blir lagt på en kommentar. Du kan for eksempel gjøre denne endringen som legger på 
 
 ```hcl
 resource "aws_apprunner_service" "service" {
