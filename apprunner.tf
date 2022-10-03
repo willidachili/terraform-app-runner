@@ -31,7 +31,6 @@ resource "aws_iam_role_policy_attachment" "apprunner-service-role-attachment" {
 data "aws_iam_policy_document" "apprunner-service-assume-policy" {
   statement {
     actions = ["sts:AssumeRole"]
-
     principals {
       type        = "Service"
       identifiers = ["build.apprunner.amazonaws.com"]
