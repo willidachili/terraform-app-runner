@@ -1,5 +1,5 @@
-resource "aws_apprunner_service" "example" {
-  service_name = "${var.prefix}-service"
+resource "aws_apprunner_service" "service" {
+  service_name = var.prefix
 
   source_configuration {
     authentication_configuration {
@@ -14,9 +14,6 @@ resource "aws_apprunner_service" "example" {
       image_repository_type = "ECR"
     }
     auto_deployments_enabled = true
-  }
-  tags = {
-    Name = "example-apprunner-service"
   }
 }
 
