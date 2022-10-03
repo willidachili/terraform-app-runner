@@ -30,6 +30,7 @@ resource "aws_iam_role_policy_attachment" "apprunner-service-role-attachment" {
 
 data "aws_iam_policy_document" "apprunner-service-assume-policy" {
   statement {
+    effect = "Allow"
     actions = ["sts:AssumeRole"]
     principals {
       type        = "Service"
