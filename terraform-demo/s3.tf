@@ -1,3 +1,8 @@
+# 1. Bytt ut bucket med  variabel
+# 2. Gi variabel default
+# 3- Fjern default
+# 4- Gi parameter på kommandlinje
+
 resource "aws_s3_bucket" "b" {
   bucket = "pgr301-testbucket-glennbech"
 
@@ -6,3 +11,4 @@ resource "aws_s3_bucket" "b" {
     Environment = "Dev"
   }
 }
+
