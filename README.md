@@ -155,14 +155,17 @@ backend "s3" {
 }
 ```
 
-## Finn ditt eget ECR repositoru
+## Finn ditt eget ECR repository
 
-* Det er laget et ECR repositor til hver student som en del av labmiljøet *<studentnavn>-private*
+* Det er laget et ECR repositor til hver student som en del av labmiljøet 
+* Dette heter *<studentnavn>-private*
+* Gå til tjenesten ECR og sjekk at dette finnes
 
 ## Gjør nødvendig endringer i pipeline.yml 
 
 Som dere ser er "glenn" hardkodet ganske mange steder, bruk ditt eget ECR repository.
-
+NB. Pass på å både push en container med git revisjons id'en, men også en latest tag.
+ 
 ```sh
           docker build . -t hello
           docker tag hello 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:$rev
@@ -171,6 +174,17 @@ Som dere ser er "glenn" hardkodet ganske mange steder, bruk ditt eget ECR reposi
           docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:latest
 ```
 
+## Endre terraform apply linjen 
+
+Finn denne linjen, du må endre prefix til å være ditt studentnavn, du må også legge inn studentnavn i image variabelen
+for å fortelle app runner hvilket container som skal deployes.
+
+```
+ run: terraform apply -var="prefix=<studentnavn>" -var="image=244530008913.dkr.ecr.eu-west-1.amazonaws.com/<studentnavn>-private:latest" -auto-approve
+```
+
 ## Test 
 
-* Når dere kjører jobben første gang, vil det lages en docker container som pushes til ECR repository
+* Kjør jobben manuelt førte gang gang. Det vil det lages en docker container som pushes til ECR repository. App runner vil lage en service 
+* Sjekk at det er dukket opp to container images i ECR. En med en tag som matcher git commit, og en som heter latest.
+* Lag en Pull request, ved å gjøre en endring i terraform koden, sjekk at det blir lagt på en kommentar
