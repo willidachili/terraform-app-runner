@@ -18,7 +18,7 @@ resource "aws_apprunner_service" "service" {
 }
 
 resource "aws_iam_role" "apprunner-service-role" {
-  name               = "${var.prefix}-AppRunnerECRAccessRole"
+  name               = "${var.prefix}-AppRunnerECRAccess"
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.apprunner-service-assume-policy.json
 }
