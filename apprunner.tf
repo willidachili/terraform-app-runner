@@ -17,25 +17,3 @@ resource "aws_apprunner_service" "service" {
     auto_deployments_enabled = true
   }
 }
-
-resource "aws_iam_role" "apprunner-service-role" {
-  name               = "${var.prefix}-AppRunnerECRAccess"
-  path               = "/"
-  assume_role_policy = data.aws_iam_policy_document.apprunner-service-assume-policy.json
-}
-
-resource "aws_iam_role_policy_attachment" "apprunner-service-role-attachment" {
-  role       = aws_iam_role.apprunner-service-role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
-}
-
-data "aws_iam_policy_document" "apprunner-service-assume-policy" {
-  statement {
-    effect  = "Allow"
-    actions = ["sts:AssumeRole"]
-    principals {
-      type        = "Service"
-      identifiers = ["build.apprunner.amazonaws.com"]
-    }
-  }
-}
