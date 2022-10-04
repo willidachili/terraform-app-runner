@@ -1,24 +1,24 @@
 # Infrastruktur som kode med Terraform og AWS App runner 
 
-Når du er ferdig med denne oppgaven vil du ha et repository som inneholder en Spring Boot applikasjon. Når du gjør en commit 
-på main branch så vil GitHub actions lage et Docker Image, og gjøre en push til ECR. 
+Når du er ferdig med denne oppgaven vil du ha et repository som inneholder en Spring Boot applikasjon. 
+Når du gjør en commit på main branch i dette, så vil GitHub actions gjøre 
 
-I tillegg vil En annen GitHub actions job sørge for å lage AWS infrastruktur, IAM roller og en AWS App Runner Service.
+* Lage et Docker Image, og Push til ECR. Både med "latest" tag - og med en spesifikk  tag som matcher git commit.  
+* Bruke Terraform til å lage AWS infrastruktur, IAM roller og en AWS App Runner Service.
 
-* I denne oppgaven skal vi gjøre en en docker container tilgjengelig over internett ved hjelp av tjeneste AWS Apprunner
-* Apprunner lager nødvendig infrastruktur for containeren, og du som utvikler kan fokusere på koden.
+* I denne oppgaven skal vi gjøre en en docker container tilgjengelig over internett ved hjelp av en tjeneste AWS Apprunner.
+* Apprunner lager nødvendig infrastruktur for containeren, slik at du som utvikler kan fokusere på koden.
 
-Vi skal også se nærmere på mer avansert GitHub Actions  
+Vi skal også se nærmere på mer avansert GitHub Actions: For eksempel; 
 
-* Mer avansert Github actions. For eksempel; Flere jobber og avhengigheter mellom jobber
-* Eksempel; En workflow med to jobber - en jobb vil lage infrastruktur med terraform, den andre bygge Docker container image
-* Mer avansert Github actions - Bruke funksjonen ```github.issues.createComment``` for å legge på kommentar på Pull requests 
-* Bruke terraform i Pipeline - GitHub actions skal kjøre Terraform. 
-* Lære mer om AWS IAM og Roller
+* To jobber og avhengigheter mellom disse. 
+* En jobb vil lage infrastruktur med terraform, den andre bygge Docker container image
+* Bruke terraform i Pipeline - GitHub actions skal kjøre Terraform for oss. 
+* En liten intro til AWS IAM og Roller
 
 ## Lag en fork
 
-Du må start emd å lage en fork av dette repositoryet til din egen GitHub konto.
+Du må start emd å lage en fork av dette repoet til din egen GitHubkonto.
 
 ![Alt text](img/fork.png  "a title")
 
@@ -55,18 +55,15 @@ ditt eget Github brukernavn :-)
 
 ![Alt text](img/clone.png  "a title")
 
-OBS Når du gjør ```git push``` senere og du skal autentisere deg, skal du bruke GitHub Access token når du blir bedt om passord,
-så du trenger å ta vare på dette et sted.
+OBS Når du gjør ```git push``` senere og du skal autentisere deg, skal du bruke GitHub  brukernavn, og access token som passord,
 
-For å slippe å autentisere seg hele tiden kan man få git til å cache nøkler i et valgfritt
-antall sekunder på denne måten;
+For å slippe å autentisere seg hele tiden kan man få git til å cache nøkler i et valgfritt antall sekunder på denne måten;
 
 ```shell
 git config --global credential.helper "cache --timeout=86400"
 ```
 
-Konfigurer også brukernavnet og e-posten din for GitHub CLI. Da slipepr du advarsler i terminalen
-når du gjør commit senere.
+Konfigurer også brukernavnet og e-posten din for GitHub CLI. Da slipepr du advarsler i terminalen når du gjør commit senere.
 
 ````shell
 git config --global user.name <github brukernavn>
@@ -79,10 +76,10 @@ I din fork av dette repositoriet, velg "actions" for å slå på støtte for Git
 
 ![Alt text](img/7.png "3")
 
-### Sett Repository hemmeligheer 
+### Sett Repository secrets 
 
-* Lag AWS IAM Access Keys for din bruker. 
-* Vi sette hemmeligheter på denne måten slik at terraform har tilgang til AWS nøkler, og har de rettighetene som er nødvendig. 
+* Lag AWS IAM Access Keys for din bruker 
+* Vi sette hemmeligheter ved å legge til følgende kodeblokk i github actions workflow fila vår slik at terraform kan autentisere seg med vår identitet, og våre rettigheter. 
 
 ```yaml
     env:
@@ -114,8 +111,7 @@ spør om lov før den kjører.
         run: terraform apply -auto-approve
 ```
 
-Terraform trenger docker container som lages i en egen jobb. 
-Vi kan da bruke ```needs``` for å lage en avhengighet mellom en eller flere jobber; 
+Terraform trenger docker container som lages i en egen GitHub Actions jobb. Vi kan da bruke ```needs``` for å lage en avhengighet mellom en eller flere jobber; 
 
 ```yaml
   terraform:
@@ -124,8 +120,8 @@ Vi kan da bruke ```needs``` for å lage en avhengighet mellom en eller flere job
 
 ## Endre provider.tf
 
-Provider.tf filen inneholder konfigurasjon for terraform, blant annet informasjon om hvor Terraform kan finne en state fil
-Endre key, til ditt eget studentnavn
+Provider.tf filen inneholder konfigurasjon for terraform, blant annet informasjon om hvor Terraform kan finne en *state fil*
+Endre key, til ditt eget studentnavn.
 
 ```hcl
 backend "s3" {
@@ -137,21 +133,21 @@ backend "s3" {
 
 ## Finn ditt eget ECR repository
 
-* Det er laget et ECR repositor til hver student som en del av labmiljøet 
+* Det er laget et ECR repository til hver student som en del av labmiljøet 
 * Dette heter *studentnavn-private*
 * Gå til tjenesten ECR og sjekk at dette finnes
 
 ## Gjør nødvendig endringer i pipeline.yml 
 
 Som dere ser er "glenn" hardkodet ganske mange steder, bruk ditt eget ECR repository.
-NB. Pass på å både push en container med git revisjons id'en, men også en latest tag.
- 
+* 
+* Oppgave: Endre kodeblokken under slik at den også pusher en "latest" tag. 
+* Husk at det må være samsvar mellom tag du lager med _docker build_ og det du bruker i _docker tag_ kommandoen.
+
 ```sh
           docker build . -t hello
           docker tag hello 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:$rev
-          docker tag hello 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:latest
           docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:$rev
-          docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/glenn:latest
 ```
 
 ## Endre terraform apply linjen 
