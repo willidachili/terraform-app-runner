@@ -50,7 +50,7 @@ Fra Terminal i Cloud 9. Klone repositoriet *ditt* med HTTPS URL.
 git clone https://github.com/≤github bruker>/terraform-app-runner.git
 ```
 
-Får du denne feilmeldingen ```bash: /03-terraform-iac: Permission denied``` - så glemte du å bytte ut <github bruker> med
+Får du denne feilmeldingen ```bash: /terraform-app-runner: Permission denied``` - så glemte du å bytte ut <github bruker> med
 ditt eget Github brukernavn :-)
 
 ![Alt text](img/clone.png  "a title")
