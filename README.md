@@ -18,7 +18,12 @@ Vi skal også se nærmere på mer avansert GitHub Actions: For eksempel;
 
 ## Lag en fork
 
-Du må start emd å lage en fork av dette repoet til din egen GitHubkonto.
+```
+Viktig!
+Hvis du allerede har laget en fork av dette repoet - må du enten slette din fork (ditt repo) eller oppdatere ditt repo så 
+du har siste versjon av repoet i din fork. 
+```
+Du må start med å lage en fork av dette repoet til din egen GitHub-konto.
 
 ![Alt text](img/fork.png  "a title")
 
@@ -76,10 +81,10 @@ I din fork av dette repositoriet, velg "actions" for å slå på støtte for Git
 
 ![Alt text](img/7.png "3")
 
-### Sett Repository secrets
+### Lag Repository secrets
 
-* Lag AWS IAM Access Keys for din bruker
-* Vi sette hemmeligheter ved å legge til følgende kodeblokk i github actions workflow fila vår slik at terraform kan autentisere seg med vår identitet, og våre rettigheter.
+* Lag AWS IAM Access Keys for din bruker.  
+* Se på .github/workflows/pipeline.yaml - Vi setter hemmeligheter ved å legge til følgende kodeblokk i github actions workflow fila vår slik at terraform kan autentisere seg med vår identitet, og våre rettigheter.
 
 ```yaml
     env:
@@ -88,7 +93,7 @@ I din fork av dette repositoriet, velg "actions" for å slå på støtte for Git
       AWS_REGION: eu-west-1
 ```
 
-### Test terraform, med lokal state i Cloud 9
+### Terraform fra Cloud9 med lokal state fil.
 
 Gå til terraform-demo mappen i dett repoet med
 ```
