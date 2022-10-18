@@ -213,7 +213,8 @@ og med objektnavnet du valgte. NB. For de ekstra observante, det er en backup av
 
 ## Terraform med GitHub actions
 
-Du skal ikke bruke provider.tf i *terraform-demo* katalogen for denne oppgaven!
+* Du skal ikke bruke provider.tf i *terraform-demo* katalogen for denne oppgaven!
+* Så ... Før du går videre, slett hele terraform-demo katalogen fra Cloud9 for å unngå forvirring rundt hvilken provider.tf som skal endres osv.
 
 ### Sett Repository secrets
 
@@ -256,9 +257,6 @@ Terraform trenger docker container som lages i en egen GitHub Actions jobb. Vi k
     needs: build_docker_image
 ```
 
-## Endre provider.tf
-
-* Viktig; Før du går videre, slett hele terraform-demo katalogen fra Cloud9 for å unngå forvirring rundt hvilken provider.tf som skal endres osv. 
 
 I rot-katalogen;  Endre provider.tf 
 ```hcl
