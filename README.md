@@ -256,7 +256,6 @@ Terraform trenger docker container som lages i en egen GitHub Actions jobb. Vi k
     needs: build_docker_image
 ```
 
-
 I rot-katalogen;  Endre provider.tf 
 ```hcl
 backend "s3" {
