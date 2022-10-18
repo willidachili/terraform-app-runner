@@ -177,7 +177,7 @@ terraform apply --auto-approve
 
 * Gå til Amazon S3 i AWS kontoen din, og slett bucketen.
 
-Endre provider.tf ved å legge på en _backend_ blokk, slik at den ser omtrent slik ut
+Endre s3.tf ved å legge på en _backend_ blokk, slik at den ser omtrent slik ut
 
 ```
 terraform {
