@@ -161,7 +161,7 @@ Terraform will perform the following actions:
       + bucket                      = "glennbech-somebucket"
 ```
 
-* Kjør terraform apply, og se at Terraform lager en bucket med samme navn som defaultverdien for variabelen "bucket_name" 
+* Kjør terraform apply *uten å gi variabelnavn på kommandlinjen*, og se at Terraform lager en bucket med samme navn som defaultverdien for variabelen "bucket_name" 
 * Du må svare "yes", dette funker dårlig i feks GitHub actions, så prøv også 
 
 ```sh
@@ -299,5 +299,5 @@ for å fortelle app runner hvilket container som skal deployes.
 
 ## Test
 
-* Kjør byggejobben manuelt førte gang gang.  Det vil det lages en docker container som pushes til ECR repository. App runner vil lage en service
-* Sjekk at det er dukket opp to container images i ECR. En med en tag som matcher git commit, og en som heter latest.
+* Kjør byggejobben manuelt førte gang gang. Det vil det lages en docker container som pushes til ECR repository. App runner vil lage en service
+* Sjekk at det er dukket opp to container images i ECR. En med en tag som matcher git commit, og en som heter "latest".
