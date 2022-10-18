@@ -112,9 +112,8 @@ Gå til s3-demo katalogen. Legg merke til at
 
 * Vi kan ha elementer som "resource", "provider" - og "variabler" i samme fil. Dette er ikke god praksis, men mulig slik som her.
 * Terraform bryr seg ikke om filnavn. Alle filer med etternavn ```*.tf``` fra katalogen terraform kjører og ses på samtidig - under ett. 
-* Endre s3.tf og endre bucket navnet slik at det blir globalt unikt.
 
-Deretter utfører du kommandoene
+Utfør  kommandoene
 
  ```
 terraform init 
