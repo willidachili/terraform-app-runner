@@ -1,7 +1,11 @@
-# 1. Bytt ut bucket med  variabel
-# 2. Gi variabel default
-# 3- Fjern default
-# 4- Gi parameter på kommandlinje
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "4.33.0"
+    }
+  }
+}
 
 resource "aws_s3_bucket" "mybucket" {
   bucket = var.bucket_name
