@@ -14,6 +14,6 @@ resource "aws_apprunner_service" "service" {
       image_identifier      = var.image
       image_repository_type = "ECR"
     }
-    auto_deployments_enabled = true
+    auto_deployments_enabled = false
   }
 }
