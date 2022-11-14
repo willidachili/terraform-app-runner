@@ -1,6 +1,5 @@
 resource "aws_apprunner_service" "service" {
   service_name = var.prefix
-
   source_configuration {
 
     authentication_configuration {
