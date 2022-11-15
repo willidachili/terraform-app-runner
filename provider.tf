@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
     bucket = "pgr301-2021-terraform-state"
-    key    = "glenn.richard.bech/apprunner-a-new-state.state"
+    key    = "wine001/apprunner-wine001-new.state"
     region = "eu-north-1"
   }
 }
